@@ -62,9 +62,9 @@ public final class TaskList implements Runnable {
             case "uncheck":
                 uncheck(commandRest[1]);
                 break;
-            case "deadline":
-                deadline(commandRest[1]);
-                break;
+//            case "deadline":
+//                deadline(commandRest[1]);
+//                break;
             case "help":
                 help();
                 break;
@@ -73,27 +73,27 @@ public final class TaskList implements Runnable {
                 break;
         }
     }
-
-    private void deadline(String commandLine) {
-        System.out.println(commandLine);
-        String[] subcommandRest = commandLine.split(" ", 2);
-        if( subcommandRest.length < 2){
-            out.printf("Invalid number of arguments provided.");
-            out.println();
-            return;
-        }
-
-        String id = subcommandRest[0];
-        String date = subcommandRest[1];
-
-        //guard
-        if(id == null || !tasks.containsKey(id)){
-            out.printf("Could not find a task with an ID of %d.", id);
-            out.println();
-            return;
-        }
-
-    }
+//
+//    private void deadline(String commandLine) {
+//        System.out.println(commandLine);
+//        String[] subcommandRest = commandLine.split(" ", 2);
+//        if( subcommandRest.length < 2){
+//            out.printf("Invalid number of arguments provided.");
+//            out.println();
+//            return;
+//        }
+//
+//        String id = subcommandRest[0];
+//        String date = subcommandRest[1];
+//
+//        //guard
+//        if(id == null || !tasks.containsKey(id)){
+//            out.printf("Could not find a task with an ID of %d.", id);
+//            out.println();
+//            return;
+//        }
+//
+//    }
 
     private void show() {
         for (Map.Entry<String, List<Task>> project : tasks.entrySet()) {
