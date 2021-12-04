@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.io.PrintWriter;
+
+import com.codurance.training.tasks.infrastructure.ConsoleApplication;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +29,7 @@ public final class ApplicationTest {
     public ApplicationTest() throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(new PipedInputStream(inStream)));
         PrintWriter out = new PrintWriter(new PipedOutputStream(outStream), true);
-        TaskList taskList = new TaskList(in, out);
+        ConsoleApplication taskList = new ConsoleApplication(in, out);
         applicationThread = new Thread(taskList);
     }
 
@@ -50,26 +52,6 @@ public final class ApplicationTest {
         applicationThread.interrupt();
         throw new IllegalStateException("The application is still running.");
     }
-//    @Test(timeout = 1000)
-//    public void should_print_message_on_invalid_deadline_input()throws IOException {
-//        execute("deadline ");
-//        execute("deadline notavalidid");
-//        execute("deadline notavalidid notadate");
-//        execute("add project tests");
-//        execute("add task validid Test the id.");
-//        execute("deadline validid notadate");
-//        execute("deadline validid 10-01-21");
-//
-//
-//        readLines(
-//                "Invalid number of arguments provided.",
-//                "Invalid number of arguments provided.",
-//                "Could not find a task with an ID of notavalidid",
-//                "The provided date is invalid: notadate"
-//                );
-//
-//        execute("quit");
-//    }
 
     @Test(timeout = 1000) public void
     it_works() throws IOException {
