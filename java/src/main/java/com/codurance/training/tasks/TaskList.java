@@ -1,9 +1,13 @@
 package com.codurance.training.tasks;
 
+import com.codurance.training.tasks.project.Project;
+import com.codurance.training.tasks.project.Task;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.util.*;
 
 public final class TaskList implements Runnable {
@@ -60,9 +64,9 @@ public final class TaskList implements Runnable {
             case "uncheck":
                 uncheck(commandRest[1]);
                 break;
-//            case "deadline":
-//                deadline(commandRest[1]);
-//                break;
+            case "deadline":
+                deadline(commandRest[1]);
+                break;
             case "help":
                 help();
                 break;
@@ -71,33 +75,46 @@ public final class TaskList implements Runnable {
                 break;
         }
     }
-//
-//    private void deadline(String commandLine) {
-//        System.out.println(commandLine);
-//        String[] subcommandRest = commandLine.split(" ", 2);
-//        if( subcommandRest.length < 2){
-//            out.printf("Invalid number of arguments provided.");
-//            out.println();
-//            return;
-//        }
-//
-//        String id = subcommandRest[0];
-//        String date = subcommandRest[1];
+
+    private void deadline(String commandLine) {
+        System.out.println(commandLine);
+        String[] subcommandRest = commandLine.split(" ", 2);
+        if (subcommandRest.length < 2) {
+            out.printf("Invalid number of arguments provided.");
+            out.println();
+            return;
+        }
+
+        String idParam = subcommandRest[0];
+        String dateParam = subcommandRest[1];
+
+        long id = Long.parseLong(idParam);
+        LocalDate date = LocalDate.parse(dateParam);
 //
 //        //guard
-//        if(id == null || !tasks.containsKey(id)){
+//        if(id == null || !projects.values().containsKey(id)){
 //            out.printf("Could not find a task with an ID of %d.", id);
 //            out.println();
 //            return;
 //        }
-//
-//    }
+
+        projects.values()
+                .stream()
+                .flatMap(project -> project.getTasks()
+                        .stream())
+                .filter(task -> task.getId() == id)
+                .forEach(task -> task.addDeadline(date));
+    }
 
     private void show() {
         for (Project project : projects.values()) {
             out.println(project.getId());
             for (Task task : project.getTasks()) {
-                out.printf("    [%c] %d: %s%n", (task.isDone() ? 'x' : ' '), task.getId(), task.getDescription());
+                out.printf("    [%c] %d%12s: %s%n",
+                        (task.isDone() ? 'x' : ' '),
+                        task.getId(),
+                        (task.getDeadline() == null ? "" : "(" + task.getDeadline() +")"),
+                        task.getDescription());
             }
             out.println();
         }

@@ -82,8 +82,8 @@ public final class ApplicationTest {
         execute("show");
         readLines(
             "secrets",
-            "    [ ] 1: Eat more donuts.",
-            "    [ ] 2: Destroy all humans.",
+            "    [ ] 1            : Eat more donuts.",
+            "    [ ] 2            : Destroy all humans.",
             ""
         );
 
@@ -94,7 +94,7 @@ public final class ApplicationTest {
         execute("add task training Primitive Obsession");
         execute("add task training Outside-In TDD");
         execute("add task training Interaction-Driven Design");
-//        execute("deadline training 10-01-2021");
+        execute("deadline 1 2021-10-01");
 
         execute("check 1");
         execute("check 3");
@@ -104,16 +104,16 @@ public final class ApplicationTest {
         execute("show");
         readLines(
                 "secrets",
-                "    [x] 1: Eat more donuts.",
-                "    [ ] 2: Destroy all humans.",
+                "    [x] 1(2021-10-01): Eat more donuts.",
+                "    [ ] 2            : Destroy all humans.",
                 "",
                 "training",
-                "    [x] 3: Four Elements of Simple Design",
-                "    [ ] 4: SOLID",
-                "    [x] 5: Coupling and Cohesion",
-                "    [x] 6: Primitive Obsession",
-                "    [ ] 7: Outside-In TDD",
-                "    [ ] 8: Interaction-Driven Design",
+                "    [x] 3            : Four Elements of Simple Design",
+                "    [ ] 4            : SOLID",
+                "    [x] 5            : Coupling and Cohesion",
+                "    [x] 6            : Primitive Obsession",
+                "    [ ] 7            : Outside-In TDD",
+                "    [ ] 8            : Interaction-Driven Design",
                 ""
         );
 
